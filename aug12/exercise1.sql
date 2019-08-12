@@ -21,4 +21,4 @@ SELECT *, ((grade_1+grade_2+grade_3)/3) AS bonito FROM students;
 SELECT AVG(grade_1) FROM students;
 SELECT COUNT(*) FROM students;
 SELECT *, ((grade_1+grade_2+grade_3)/3) AS average FROM students HAVING average > 5.9999;
-ALTER TABLE students ADD COLUMN id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT;
+ALTER TABLE students ADD COLUMN id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL FIRST;
