@@ -48,3 +48,14 @@ INSERT INTO students VALUES(
     5,
     0
 );
+
+SELECT *,(grade_1+grade_2+grade_3)/3 AS average FROM students;--Crea un promedio de las columnas
+ALTER TABLE students DROP average;--Borra columna average
+SELECT *,(grade_1+grade_2+grade_3)/3 AS average FROM students HAVING average>5;--Crea slecciona las columnas con promedio mayor a 5
+SELECT * FROM students WHERE last_name IS NULL;--Busca apellidos nulls
+
+TRUNCATE students;--Borra todo de la tabla
+/*Inserta una nueva columna primaria*/
+ALTER TABLE students ADD id INT;
+ALTER TABLE students ADD PRIMARY KEY(id);
+ALTER TABLE students MODIFY id INT NOT NULL AUTO_INCREMENT;
