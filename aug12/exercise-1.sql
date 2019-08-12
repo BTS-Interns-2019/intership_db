@@ -7,5 +7,5 @@ insert into students values ('Emmanuel','Villalobos Arronte',7,7,7,0);
 insert into students values ('pepe',null,8,5,6,0);
 insert into students values ('Juan','Perez',6,4,5,0);
 SELECT (grade_1 + grade_2 + grade_3)/3 from students;
-
-
+alter table students drop average;
+alter table students add id int primary key auto_increment
