@@ -8,3 +8,8 @@ CREATE TABLE students ( -- Create a new students table
   grade_3 TINYINT(2) UNSIGNED,
   average DECIMAL(2,2),
 );
+INSERT INTO students (first_name, last_name, grade_1, grade_2, grade_3, average) VALUES ('Juan', 'Perez', 8, 8, 9, 0);
+INSERT INTO students (first_name, last_name, grade_1, grade_2, grade_3, average) VALUES ('Apu', 'Nahasapimapeti', 7, 8, 9, 0);
+INSERT INTO students (first_name, last_name, grade_1, grade_2, grade_3, average) VALUES ('Emmanuel', 'Villalobos Arronte', 7, 7, 7, 0);
+INSERT INTO students (first_name, last_name, grade_1, grade_2, grade_3, average) VALUES ('pepe', NULL, 8, 5, 6, 0);
+INSERT INTO students (first_name, last_name, grade_1, grade_2, grade_3, average) VALUES ('Juan', 'Perez', 6, 4, 5, 0);
