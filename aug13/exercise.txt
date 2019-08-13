@@ -1,0 +1,8 @@
+SELECT * FROM bts_internship.students;
+SELECT * FROM students;
+UPDATE students SET grade_1 = 0 WHERE first_name = 'Apu';
+SELECT * FROM students;
+UPDATE students SET grade_2 = 10 WHERE ID = 5;
+SELECT * FROM students;
+DELETE FROM students WHERE last_name = 'Perez'
+SELECT * FROM students;
