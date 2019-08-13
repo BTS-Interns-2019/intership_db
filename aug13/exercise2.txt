@@ -1,0 +1,20 @@
+MariaDB [bts_internship]> describe students
+    -> ;
++------------+------------------+------+-----+---------+----------------+
+| Field      | Type             | Null | Key | Default | Extra          |
++------------+------------------+------+-----+---------+----------------+
+| first_name | varchar(120)     | YES  |     | NULL    |                |
+| last_name  | varchar(120)     | YES  |     | NULL    |                |
+| id         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
++------------+------------------+------+-----+---------+----------------+
+3 rows in set (0.021 sec)
+
+MariaDB [bts_internship]> describe grades;
++------------+---------------------+------+-----+---------+-------+
+| Field      | Type                | Null | Key | Default | Extra |
++------------+---------------------+------+-----+---------+-------+
+| id_student | int(10) unsigned    | YES  |     | NULL    |       |
+| week       | tinyint(3) unsigned | YES  |     | NULL    |       |
+| grade      | tinyint(2) unsigned | YES  |     | NULL    |       |
++------------+---------------------+------+-----+---------+-------+
+3 rows in set (0.017 sec)
