@@ -24,4 +24,6 @@ ALTER TABLE students DROP COLUMN average;
 TRUNCATE students;
 ALTER TABLE students ADD COLUMN id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT;
 
+-- exit
 
+-- mysql -p -u root bts_internship < studentsTable.sql
