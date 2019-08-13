@@ -1,0 +1,40 @@
+MariaDB [bts_intership]> CREATE TABLE students (id INT(10) NOT NULL AUTO_INCREMENT, first_name VARCHAR(120) NOT NULL,last_names VARCHAR(120), PRIMARY KEY(id));
+Query OK, 0 rows affected (0.446 sec)
+
+MariaDB [bts_intership]> CREATE TABLE grades(id TINYINT(2) NOT NULL AUTO_INCREMENT, first_name VARCHAR(120) NOT NULL,grades_1 TINYINT(2), grades_2 TINYINT(2), grade_3 TINYINT(2), PRIMARY KEY(id));
+Query OK, 0 rows affected (0.380 sec)
+
+MariaDB [bts_intership]> show tables;
++-------------------------+
+| Tables_in_bts_intership |
++-------------------------+
+| grades                  |
+| students                |
++-------------------------+
+2 rows in set (0.001 sec)
+
+
+MariaDB [bts_intership]> describe students;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | tinyint(2)   | NO   | PRI | NULL    | auto_increment |
+| first_name | varchar(120) | NO   |     | NULL    |                |
+| last_names | varchar(120) | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.016 sec)
+
+
+MariaDB [bts_intership]> describe grades;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | tinyint(2)   | NO   | PRI | NULL    | auto_increment |
+| first_name | varchar(120) | NO   |     | NULL    |                |
+| grades_1   | tinyint(2)   | YES  |     | NULL    |                |
+| grades_2   | tinyint(2)   | YES  |     | NULL    |                |
+| grade_3    | tinyint(2)   | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.018 sec)
+
+
