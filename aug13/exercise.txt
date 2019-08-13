@@ -1,0 +1,90 @@
+mysql> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| bts_intership      |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use bts_intership
+Database changed
+mysql> select * from students
+    -> ;
++----+------------+--------------------+---------+---------+---------+
+| id | first_name | last_name          | grade_1 | grade_2 | grade_3 |
++----+------------+--------------------+---------+---------+---------+
+|  1 | Juan       | Perez              |       8 |       8 |       9 |
+|  2 | Apu        | Nahasapimapeti     |       7 |       8 |       9 |
+|  3 | Emmanuel   | Villalobos Arronte |       7 |       7 |       7 |
+|  4 | pepe       |                    |       8 |       5 |       6 |
+|  5 | Juan       | Perez              |       6 |       4 |       5 |
++----+------------+--------------------+---------+---------+---------+
+5 rows in set (0.04 sec)
+
+mysql> SELECT * FROM students;
++----+------------+--------------------+---------+---------+---------+
+| id | first_name | last_name          | grade_1 | grade_2 | grade_3 |
++----+------------+--------------------+---------+---------+---------+
+|  1 | Juan       | Perez              |       8 |       8 |       9 |
+|  2 | Apu        | Nahasapimapeti     |       7 |       8 |       9 |
+|  3 | Emmanuel   | Villalobos Arronte |       7 |       7 |       7 |
+|  4 | pepe       |                    |       8 |       5 |       6 |
+|  5 | Juan       | Perez              |       6 |       4 |       5 |
++----+------------+--------------------+---------+---------+---------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE students SET last_name = NULL WHERE first_name = pepe;
+ERROR 1054 (42S22): Unknown column 'pepe' in 'where clause'
+mysql> UPDATE students SET last_name = NULL WHERE first_name = "pepe";
+Query OK, 1 row affected (0.15 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM students;
++----+------------+--------------------+---------+---------+---------+
+| id | first_name | last_name          | grade_1 | grade_2 | grade_3 |
++----+------------+--------------------+---------+---------+---------+
+|  1 | Juan       | Perez              |       8 |       8 |       9 |
+|  2 | Apu        | Nahasapimapeti     |       7 |       8 |       9 |
+|  3 | Emmanuel   | Villalobos Arronte |       7 |       7 |       7 |
+|  4 | pepe       | NULL               |       8 |       5 |       6 |
+|  5 | Juan       | Perez              |       6 |       4 |       5 |
++----+------------+--------------------+---------+---------+---------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE students SET last_name = "Nahasapeemapetilon" WHERE first_name = "Apu"
+    -> ;
+Query OK, 1 row affected (0.15 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM students;
++----+------------+--------------------+---------+---------+---------+
+| id | first_name | last_name          | grade_1 | grade_2 | grade_3 |
++----+------------+--------------------+---------+---------+---------+
+|  1 | Juan       | Perez              |       8 |       8 |       9 |
+|  2 | Apu        | Nahasapeemapetilon |       7 |       8 |       9 |
+|  3 | Emmanuel   | Villalobos Arronte |       7 |       7 |       7 |
+|  4 | pepe       | NULL               |       8 |       5 |       6 |
+|  5 | Juan       | Perez              |       6 |       4 |       5 |
++----+------------+--------------------+---------+---------+---------+
+5 rows in set (0.00 sec)
+
+mysql> DELETE FROM students WHERE first_name = "Juan" AND grade_1 = 6;
+Query OK, 1 row affected (0.19 sec)
+
+mysql> SELECT * FROM students;
++----+------------+--------------------+---------+---------+---------+
+| id | first_name | last_name          | grade_1 | grade_2 | grade_3 |
++----+------------+--------------------+---------+---------+---------+
+|  1 | Juan       | Perez              |       8 |       8 |       9 |
+|  2 | Apu        | Nahasapeemapetilon |       7 |       8 |       9 |
+|  3 | Emmanuel   | Villalobos Arronte |       7 |       7 |       7 |
+|  4 | pepe       | NULL               |       8 |       5 |       6 |
++----+------------+--------------------+---------+---------+---------+
+4 rows in set (0.00 sec)
