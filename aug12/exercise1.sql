@@ -25,6 +25,8 @@ SELECT *, (grade_1 + grade_2 + grade_3)/3 AS average FROM students HAVING averag
 TRUNCATE students;
 ALTER TABLE students ADD COLUMN ID INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL FIRST;
 
+-- mysql -u root -p bts_internship < C:\Users\silva\Desktop\cmder\intership_db\studentsTable.sql
+
 -- INSERT INTO students (`first_name`,`last_name`,`grade_1`,`grade_2`,`grade_3`) VALUES ('Juan','Perez',8,8,9);
 -- INSERT INTO students (`first_name`,`last_name`,`grade_1`,`grade_2`,`grade_3`) VALUES ('Apu','Nahasapeemapetilon',7,8,9);
 -- INSERT INTO students (`first_name`,`last_name`,`grade_1`,`grade_2`,`grade_3`) VALUES ('Emmanuel','Villalobos Arronte',7,7,7);
