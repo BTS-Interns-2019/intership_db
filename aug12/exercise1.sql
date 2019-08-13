@@ -27,3 +27,5 @@ SELECT *,((grade_1 + grade_2 + grade_3)/3) AS average FROM students HAVING avera
 SELECT *,((grade_1 + grade_2 + grade_3)/3) AS average FROM students HAVING average >5.9999 AND average <8;
 SELECT * FROM students WHERE last_name IS NOT NULL;
 ALTER TABLE students ADD COLUMN id INT unsigned PRIMARY KEY AUTO_INCREMENT;
+
+mysql -u root -p bts_internship <C:\xampp\studentsTable.sql
