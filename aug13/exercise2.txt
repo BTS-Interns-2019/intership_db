@@ -18,3 +18,14 @@ MariaDB [bts_internship]> DESCRIBE students_grades;
 | grade      | tinyint(2) unsigned | YES  |     | NULL    |       |
 +------------+---------------------+------+-----+---------+-------+
 3 rows in set (0.209 sec)
+
+3. DESCRIBE students;
+MariaDB [bts_internship]> DESCRIBE students;
++------------+------------------+------+-----+---------+----------------+
+| Field      | Type             | Null | Key | Default | Extra          |
++------------+------------------+------+-----+---------+----------------+
+| id         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| first_name | varchar(120)     | YES  |     | NULL    |                |
+| last_name  | varchar(120)     | YES  |     | NULL    |                |
++------------+------------------+------+-----+---------+----------------+
+3 rows in set (0.172 sec)
