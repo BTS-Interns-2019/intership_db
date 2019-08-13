@@ -22,3 +22,7 @@ SELECT AVG(grade_1) FROM students;
 SELECT COUNT(*) FROM students;
 SELECT *, ((grade_1+grade_2+grade_3)/3) AS average FROM students HAVING average > 5.9999;
 ALTER TABLE students ADD COLUMN id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL FIRST;
+TRUNCATE students;
+quit;
+
+mysql -u root -p bts_internship < C:\Users\estef\OneDrive\Escritorio\cmder\intership_db\studentsTable.sql
