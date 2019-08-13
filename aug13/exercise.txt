@@ -1,0 +1,71 @@
+1. Execute 'SELECT * FROM students;'
+
+MariaDB [bts_internship]> SELECT * FROM students;
++----+------------+--------------------+---------+---------+---------+
+| id | first_name | last_name          | grade_1 | grade_2 | grade_3 |
++----+------------+--------------------+---------+---------+---------+
+|  1 | Juan       | Perez              |       8 |       8 |       9 |
+|  2 | Apu        | Nahasapimapeti     |       7 |       8 |       9 |
+|  3 | Emmanuel   | Villalobos Arronte |       7 |       7 |       7 |
+|  4 | pepe       |                    |       8 |       5 |       6 |
+|  5 | Juan       | Perez              |       6 |       4 |       5 |
++----+------------+--------------------+---------+---------+---------+
+5 rows in set (0.011 sec)
+
+2. Update one record
+
+MariaDB [bts_internship]> UPDATE students SET grade_1 = 9 WHERE first_name = 'Apu';
+Query OK, 1 row affected (0.092 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+3. Execute 'SELECT * FROM students;'
+
+MariaDB [bts_internship]> SELECT * FROM students;
++----+------------+--------------------+---------+---------+---------+
+| id | first_name | last_name          | grade_1 | grade_2 | grade_3 |
++----+------------+--------------------+---------+---------+---------+
+|  1 | Juan       | Perez              |       8 |       8 |       9 |
+|  2 | Apu        | Nahasapimapeti     |       9 |       8 |       9 |
+|  3 | Emmanuel   | Villalobos Arronte |       7 |       7 |       7 |
+|  4 | pepe       |                    |       8 |       5 |       6 |
+|  5 | Juan       | Perez              |       6 |       4 |       5 |
++----+------------+--------------------+---------+---------+---------+
+5 rows in set (0.000 sec)
+
+4. Update other record
+
+MariaDB [bts_internship]> UPDATE students SET grade_3 = 5 WHERE id = 1;
+Query OK, 1 row affected (0.055 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+5. Execute 'SELECT * FROM students;'
+
+MariaDB [bts_internship]> SELECT * FROM students;
++----+------------+--------------------+---------+---------+---------+
+| id | first_name | last_name          | grade_1 | grade_2 | grade_3 |
++----+------------+--------------------+---------+---------+---------+
+|  1 | Juan       | Perez              |       8 |       8 |       5 |
+|  2 | Apu        | Nahasapimapeti     |       9 |       8 |       9 |
+|  3 | Emmanuel   | Villalobos Arronte |       7 |       7 |       7 |
+|  4 | pepe       |                    |       8 |       5 |       6 |
+|  5 | Juan       | Perez              |       6 |       4 |       5 |
++----+------------+--------------------+---------+---------+---------+
+5 rows in set (0.000 sec)
+
+6. Delete one record
+
+MariaDB [bts_internship]> DELETE FROM students WHERE id = 4;
+Query OK, 1 row affected (0.157 sec)
+
+7. Execute 'SELECT * FROM students;'
+
+MariaDB [bts_internship]> SELECT * FROM students;
++----+------------+--------------------+---------+---------+---------+
+| id | first_name | last_name          | grade_1 | grade_2 | grade_3 |
++----+------------+--------------------+---------+---------+---------+
+|  1 | Juan       | Perez              |       8 |       8 |       5 |
+|  2 | Apu        | Nahasapimapeti     |       9 |       8 |       9 |
+|  3 | Emmanuel   | Villalobos Arronte |       7 |       7 |       7 |
+|  5 | Juan       | Perez              |       6 |       4 |       5 |
++----+------------+--------------------+---------+---------+---------+
+4 rows in set (0.000 sec)
