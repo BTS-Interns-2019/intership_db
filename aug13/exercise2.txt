@@ -1,0 +1,31 @@
+mysql> DESCRIBE students;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| first_name | varchar(140) | YES  |     | NULL    |                |
+| last_name  | varchar(140) | YES  |     | NULL    |                |
+| id         | int(11)      | NO   | PRI | NULL    | auto_increment |
++------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> DESCRIBE grades;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int(11)     | NO   | PRI | NULL    |       |
+| grade | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.04 sec)
+
+mysql> DESCRIBE results;
++------------+---------+------+-----+---------+-------+
+| Field      | Type    | Null | Key | Default | Extra |
++------------+---------+------+-----+---------+-------+
+| id         | int(11) | NO   | PRI | NULL    |       |
+| id_student | int(11) | YES  |     | NULL    |       |
+| id_grade   | int(11) | YES  |     | NULL    |       |
+| value      | int(11) | YES  |     | NULL    |       |
++------------+---------+------+-----+---------+-------+
+4 rows in set (0.03 sec)
+
+mysql>
