@@ -1,0 +1,25 @@
+USE bts_internship;
+
+- UPDATE students;
+- SET last_name = rivera WHERE id= 4;
+
+MariaDB [bts_intership]> UPDATE students
+    -> SET last_name = 'rivera' WHERE id = 4;
+Query OK, 1 row affected (0.088 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [bts_intership]> SELECT * FROM students;
+
+
+- UPDATE students
+- SET grade_2 = 8 WHERE id =4;
+
+MariaDB [bts_intership]> UPDATE students
+    -> SET grade_2 = 8 WHERE id =4;
+Query OK, 1 row affected (0.343 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+-  DELETE FROM students WHERE id=2;
+
+Query OK, 1 row affected (0.071 sec)
+
