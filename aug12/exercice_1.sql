@@ -50,3 +50,6 @@ ALTER TABLE students ADD COLUMN id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREM
 ALTER TABLE students DROP COLUMN id;
 
 ALTER TABLE students ADD COLUMN id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT FIRST;
+
+--copiar el archivo a ruta C:\Program Files\MySQL\MySQL Server 8.0\bin\
+\. studentsTable.sql
