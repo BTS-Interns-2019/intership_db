@@ -1,0 +1,21 @@
+CREATE TABLE grades (
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+id_student INT UNSIGNED,
+week INT UNSIGNED,
+grade TINYINT(2) UNSIGNED
+);
+DESCRIBE grades;
+
+INSERT INTO grades (id_student,grade, week) SELECT students.id, 
+students.grade_1, 1 FROM students;
+INSERT INTO grades (id_student, grade, week) SELECT students.id, 
+students.grade_2, 2 FROM students;
+INSERT INTO grades (id_student, grade, week) SELECT students.id, 
+students.grade_3, 3 FROM students;
+
+ALTER TABLE students DROP COLUMN grade_1;
+ALTER TABLE students DROP COLUMN grade_2;
+ALTER TABLE students DROP COLUMN grade_3;
+
+DESCRIBE students;
+SELECT * FROM grades;
