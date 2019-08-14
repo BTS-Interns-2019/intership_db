@@ -1,0 +1,41 @@
+mysql> CREATE TABLE alumnos(first_name VARCHAR(120),last_name VARCHAR(120),grade1 TINYINT, grade2 TINYINT,grade TINYINT, id INT PRIMARY KEY AUTO_INCREMENT);
+Query OK, 0 rows affected (0.86 sec)
+mysql> SHOW tables;
++--------------------------+
+| Tables_in_bts_internship |
++--------------------------+
+| alumnos                  |
+| students                 |
++--------------------------+
+2 rows in set (0.00 sec)
+mysql> describe alumnos;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| first_name | varchar(120) | YES  |     | NULL    |                |
+| last_name  | varchar(120) | YES  |     | NULL    |                |
+| grade1     | tinyint(4)   | YES  |     | NULL    |                |
+| grade2     | tinyint(4)   | YES  |     | NULL    |                |
+| grade      | tinyint(4)   | YES  |     | NULL    |                |
+| id         | int(11)      | NO   | PRI | NULL    | auto_increment |
++------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.10 sec)
+
+mysql> CREATE TABLE score(first_name VARCHAR(120),last_name VARCHAR(120),grade1 TINYINT, grade2 TINYINT,grade TINYINT, id INT PRIMARY KEY AUTO_INCREMENT, id_alumnos INT);
+Query OK, 0 rows affected (0.77 sec)
+
+mysql> describe score;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| first_name | varchar(120) | YES  |     | NULL    |                |
+| last_name  | varchar(120) | YES  |     | NULL    |                |
+| grade1     | tinyint(4)   | YES  |     | NULL    |                |
+| grade2     | tinyint(4)   | YES  |     | NULL    |                |
+| grade      | tinyint(4)   | YES  |     | NULL    |                |
+| id         | int(11)      | NO   | PRI | NULL    | auto_increment |
+| id_alumnos | int(11)      | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+mysql>
