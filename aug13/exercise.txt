@@ -1,0 +1,93 @@
+mysql> SELECT * FROM students;
++----+------------+--------------------+---------+---------+---------+
+| id | first_name | last_name          | grade_1 | grade_2 | grade_3 |
++----+------------+--------------------+---------+---------+---------+
+|  1 | Juan       | Perez              |       8 |       8 |       9 |
+|  2 | Apu        | Nahasapimapeti     |       7 |       8 |       9 |
+|  3 | Emmanuel   | Villalobos Arronte |       7 |       7 |       7 |
+|  4 | pepe       |                    |       8 |       5 |       6 |
+|  5 | Juan       | Perez              |       6 |       4 |       5 |
++----+------------+--------------------+---------+---------+---------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE students SET first_name = 'Pepe', last_name = 'Fernandez' WHERE id = 4;
+Query OK, 1 row affected (0.76 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM students;
++----+------------+--------------------+---------+---------+---------+
+| id | first_name | last_name          | grade_1 | grade_2 | grade_3 |
++----+------------+--------------------+---------+---------+---------+
+|  1 | Juan       | Perez              |       8 |       8 |       9 |
+|  2 | Apu        | Nahasapimapeti     |       7 |       8 |       9 |
+|  3 | Emmanuel   | Villalobos Arronte |       7 |       7 |       7 |
+|  4 | Pepe       | Fernandez          |       8 |       5 |       6 |
+|  5 | Juan       | Perez              |       6 |       4 |       5 |
++----+------------+--------------------+---------+---------+---------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE students SET grade_1 = 8, grade_2 = 3 WHERE id = 5;
+Query OK, 1 row affected (0.81 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM students;
++----+------------+--------------------+---------+---------+---------+
+| id | first_name | last_name          | grade_1 | grade_2 | grade_3 |
++----+------------+--------------------+---------+---------+---------+
+|  1 | Juan       | Perez              |       8 |       8 |       9 |
+|  2 | Apu        | Nahasapimapeti     |       7 |       8 |       9 |
+|  3 | Emmanuel   | Villalobos Arronte |       7 |       7 |       7 |
+|  4 | Pepe       | Fernandez          |       8 |       5 |       6 |
+|  5 | Juan       | Perez              |       8 |       3 |       5 |
++----+------------+--------------------+---------+---------+---------+
+5 rows in set (0.00 sec)
+
+mysql> DELETE FROM students WHERE ID = 5;
+Query OK, 1 row affected (0.12 sec)
+
+mysql> SELECT * FROM students;
++----+------------+--------------------+---------+---------+---------+
+| id | first_name | last_name          | grade_1 | grade_2 | grade_3 |
++----+------------+--------------------+---------+---------+---------+
+|  1 | Juan       | Perez              |       8 |       8 |       9 |
+|  2 | Apu        | Nahasapimapeti     |       7 |       8 |       9 |
+|  3 | Emmanuel   | Villalobos Arronte |       7 |       7 |       7 |
+|  4 | Pepe       | Fernandez          |       8 |       5 |       6 |
++----+------------+--------------------+---------+---------+---------+
+4 rows in set (0.00 sec)
+
+
+
+--Normalización de la DB bts_intership
+
+
+mysql> SHOW TABLES;
++-------------------------+
+| Tables_in_bts_intership |
++-------------------------+
+| grades                  |
+| students                |
++-------------------------+
+2 rows in set (0.00 sec)
+
+mysql> DESCRIBE STUDENTS;
++------------+------------------+------+-----+---------+----------------+
+| Field      | Type             | Null | Key | Default | Extra          |
++------------+------------------+------+-----+---------+----------------+
+| id         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| first_name | varchar(120)     | YES  |     | NULL    |                |
+| last_name  | varchar(120)     | YES  |     | NULL    |                |
++------------+------------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> DESCRIBE grades;
++--------------+------------------+------+-----+---------+-------+
+| Field        | Type             | Null | Key | Default | Extra |
++--------------+------------------+------+-----+---------+-------+
+| id           | int(10) unsigned | YES  |     | NULL    |       |
+| grade        | tinyint(2)       | YES  |     | NULL    |       |
+| calification | tinyint(2)       | YES  |     | NULL    |       |
++--------------+------------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+
