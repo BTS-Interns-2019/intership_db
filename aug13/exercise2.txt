@@ -1,0 +1,26 @@
+mysql> CREATE TABLE score(grade TINYINT, id INT PRIMARY KEY AUTO_INCREMENT, id_alumnos INT);
+Query OK, 0 rows affected (0.75 sec)
+mysql> describe score;
++------------+------------+------+-----+---------+----------------+
+| Field      | Type       | Null | Key | Default | Extra          |
++------------+------------+------+-----+---------+----------------+
+| grade      | tinyint(4) | YES  |     | NULL    |                |
+| id         | int(11)    | NO   | PRI | NULL    | auto_increment |
+| id_alumnos | int(11)    | YES  |     | NULL    |                |
++------------+------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE alumnos(first_name VARCHAR(120),last_name VARCHAR(120), id INT PRIMARY KEY AUTO_INCREMENT);
+Query OK, 0 rows affected (0.76 sec)
+
+mysql> describe alumnos;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| first_name | varchar(120) | YES  |     | NULL    |                |
+| last_name  | varchar(120) | YES  |     | NULL    |                |
+| id         | int(11)      | NO   | PRI | NULL    | auto_increment |
++------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql>
