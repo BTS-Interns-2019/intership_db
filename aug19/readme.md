@@ -13,3 +13,5 @@ India Adventure 14
 etc, etc, etc...
 
 Try different ways of getting the same result (joins and subqueries) and see which is faster.
+
+Include and analysis of the result
