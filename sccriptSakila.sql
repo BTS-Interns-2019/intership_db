@@ -33,6 +33,11 @@ JOIN rental ON rental.inventory_id= inventory.inventory_id
 GROUP BY actor_name
 ORDER BY movies DESC;
 
+SELECT * 
+FROM customer
+JOIN address ON customer.address_id = address.address_id
+WHERE address.city_id IN (SELECT city_id FROM store JOIN address ON store.address_id = address.address_id)
+
 
 
 
