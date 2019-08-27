@@ -1,4 +1,4 @@
-
+USE sakila;
 DROP PROCEDURE IF EXISTS movie;
 DELIMITER //
 CREATE PROCEDURE movie (
@@ -15,18 +15,18 @@ BEGIN
   SAVEPOINT result_save;
   
   INSERT INTO rental (rental.rental_date, rental.inventory_id, rental.customer_id, rental.staff_id)
-  VALUES(NOW(), inventory_id, customer_id, staff_id, NOW());
+  VALUES(NOW(), inventory_id, customer_id, staff_id);
                
-  SELECT las_insert_id() INTO @last_id FROM rental LIMIT 1;
+  SELECT last_insert_id() INTO @last_id FROM rental LIMIT 1;
   INSERT INTO payment(customer_id, staff_id, rental_id, amount)
-  VALUES(customer_id, staff_id, @last_id, 4.99, NOW ());  
+  VALUES(customer_id, staff_id, @last_id, 4.99);  
                 
   SELECT COUNT(*) INTO @result FROM rental WHERE inventory_id = inventory_id AND return_date IS NULL;
   SELECT @result;
   
   IF @result > 1 THEN
 	ROLLBACK TO result_save;
-    SELECT 'La pelicula no disponible' AS Mensaje;
+    SELECT 'pelicula no disponible' AS Mensaje;
     
   ELSE 
     COMMIT;
@@ -38,4 +38,4 @@ END//
 DELIMITER ; 
 
 
-CALL sakila.movie(70, 356, 2);
+CALL sakila.movie(50, 300, 2);
