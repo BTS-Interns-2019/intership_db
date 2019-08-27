@@ -6,7 +6,6 @@ USE `sakila`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `rented`(inventory_id INT, customer_id INT, staff_id INT)
 BEGIN
 DECLARE id INT;
-DECLARE count INT;
 	SET autocommit = 0;
     START transaction;
     savepoint pointer;
