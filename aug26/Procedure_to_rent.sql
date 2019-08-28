@@ -5,7 +5,7 @@ SET @inv_film := (SELECT `inventory`.inventory_id
 				  FROM `inventory`
                   WHERE `inventory`.film_id = film
                   LIMIT 1);
-SET @validator := (SELECT new_rent(film));
+SET @validator := (SELECT film_available(film));
 
 START TRANSACTION;
 	INSERT INTO `rental` (rental_date, inventory_id, customer_id, staff_id)

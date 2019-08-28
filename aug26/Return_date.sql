@@ -1,4 +1,4 @@
-CREATE DEFINER=`root`@`localhost` FUNCTION `return_date`(film INT) RETURNS varchar(50) CHARSET utf8mb4
+CREATE DEFINER=`root`@`localhost` FUNCTION `film_available`(film INT) RETURNS varchar(50) CHARSET utf8mb4
     DETERMINISTIC
 BEGIN
 SET @return_date := (SELECT `rental`.return_date
