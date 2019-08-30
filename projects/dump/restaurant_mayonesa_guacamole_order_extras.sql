@@ -25,8 +25,8 @@ DROP TABLE IF EXISTS `order_extras`;
 CREATE TABLE `order_extras` (
   `order_id` int(10) unsigned DEFAULT NULL,
   `extra_id` int(10) unsigned DEFAULT NULL,
-  KEY `order_extras_order_index_idx` (`order_id`),
   KEY `order_extras_extra_index_idx` (`extra_id`),
+  KEY `order_extras_order_index_idx` (`order_id`),
   CONSTRAINT `order_extras_extra_index` FOREIGN KEY (`extra_id`) REFERENCES `extras` (`extra_id`),
   CONSTRAINT `order_extras_order_index` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-29 20:52:31
+-- Dump completed on 2019-08-29 22:22:18
