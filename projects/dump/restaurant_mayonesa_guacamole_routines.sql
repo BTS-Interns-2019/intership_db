@@ -16,9 +16,75 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Temporary view structure for view `order_totals`
+--
+
+DROP TABLE IF EXISTS `order_totals`;
+/*!50001 DROP VIEW IF EXISTS `order_totals`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `order_totals` AS SELECT 
+ 1 AS `order_id`,
+ 1 AS `dish`,
+ 1 AS `quantity`,
+ 1 AS `total_order`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `vista_popularity`
+--
+
+DROP TABLE IF EXISTS `vista_popularity`;
+/*!50001 DROP VIEW IF EXISTS `vista_popularity`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `vista_popularity` AS SELECT 
+ 1 AS `menu_id`,
+ 1 AS `name`,
+ 1 AS `price`,
+ 1 AS `popularity`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Final view structure for view `order_totals`
+--
+
+/*!50001 DROP VIEW IF EXISTS `order_totals`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `order_totals` AS select `orders`.`order_id` AS `order_id`,`menu`.`name` AS `dish`,`orders`.`quantity` AS `quantity`,(((select `menu`.`price` from `menu` where (`menu`.`menu_id` = `orders`.`menu_id`)) * `orders`.`quantity`) + ifnull((select sum(`extras`.`price`) from (`order_extras` join `extras` on((`extras`.`extra_id` = `order_extras`.`extra_id`))) where (`order_extras`.`order_id` = `orders`.`order_id`)),0)) AS `total_order` from (`orders` join `menu` on((`menu`.`menu_id` = `orders`.`menu_id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `vista_popularity`
+--
+
+/*!50001 DROP VIEW IF EXISTS `vista_popularity`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `vista_popularity` AS select `menu`.`menu_id` AS `menu_id`,`menu`.`name` AS `name`,`menu`.`price` AS `price`,count(0) AS `popularity` from (`menu` join `orders` on((`orders`.`menu_id` = `menu`.`menu_id`))) group by `menu`.`menu_id` order by `popularity` desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Dumping routines for database 'restaurant_mayonesa_guacamole'
 --
-/*!50003 DROP FUNCTION IF EXISTS `calculate_total_order` */;
+/*!50003 DROP PROCEDURE IF EXISTS `average_day` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -28,25 +94,57 @@
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `calculate_total_order`(orderId INT, menuId INT) RETURNS decimal(8,2)
-    DETERMINISTIC
+CREATE DEFINER=`root`@`localhost` PROCEDURE `average_day`(day VARCHAR(20))
 BEGIN
-    -- Get price of menu item
-    DECLARE menu_total DECIMAL(8,2);
-    DECLARE extra_total DECIMAL(8,2);
-    SELECT price INTO menu_total
-    FROM menu
-    WHERE menu.menu_id = menuId;
-    
-    -- Get price of extras in the menu item
-    SELECT SUM(extras.price) INTO extra_total
-    FROM orders
-    JOIN order_extras ON order_extras.order_id = orders.order_id
-    JOIN extras ON extras.extra_id = order_extras.extra_id
-    WHERE orders.order_id = orderId
-    GROUP BY orders.order_id;
-    
-    RETURN menu_total + extra_total;
+DECLARE average INT;
+  SELECT AVG(total) AS average_sales, DAYNAME(served_at) AS Day FROM orders
+  WHERE
+  DAY(served_at) LIKE day
+  GROUP BY DAY(served_at);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `average_month` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `average_month`(IN month VARCHAR(20))
+BEGIN
+  SELECT AVG(total) AS average_sales, MONTHNAME(served_at) AS Month FROM orders
+  WHERE MONTHNAME(served_at) LIKE month
+  GROUP BY MONTHNAME(served_at);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `average_year` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `average_year`(year VARCHAR(20))
+BEGIN
+DECLARE average INT;
+  SELECT AVG(total) AS average_sales, YEAR(served_at) AS Year FROM orders
+  WHERE
+  YEAR(served_at) LIKE year
+  GROUP BY YEAR(served_at);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -63,4 +161,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-29 22:22:28
+-- Dump completed on 2019-08-30  0:01:18
