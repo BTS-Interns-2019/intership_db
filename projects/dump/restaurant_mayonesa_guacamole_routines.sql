@@ -16,18 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Temporary view structure for view `order_totals`
+-- Temporary view structure for view `orders_by_table`
 --
 
-DROP TABLE IF EXISTS `order_totals`;
-/*!50001 DROP VIEW IF EXISTS `order_totals`*/;
+DROP TABLE IF EXISTS `orders_by_table`;
+/*!50001 DROP VIEW IF EXISTS `orders_by_table`*/;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `order_totals` AS SELECT 
+/*!50001 CREATE VIEW `orders_by_table` AS SELECT 
  1 AS `order_id`,
- 1 AS `dish`,
- 1 AS `quantity`,
- 1 AS `total_order`*/;
+ 1 AS `table_id`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `longest_time_for_orders`
+--
+
+DROP TABLE IF EXISTS `longest_time_for_orders`;
+/*!50001 DROP VIEW IF EXISTS `longest_time_for_orders`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `longest_time_for_orders` AS SELECT 
+ 1 AS `name`,
+ 1 AS `ordered_at`,
+ 1 AS `served_at`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -46,10 +58,10 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = @saved_cs_client;
 
 --
--- Final view structure for view `order_totals`
+-- Final view structure for view `orders_by_table`
 --
 
-/*!50001 DROP VIEW IF EXISTS `order_totals`*/;
+/*!50001 DROP VIEW IF EXISTS `orders_by_table`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -58,7 +70,25 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `order_totals` AS select `orders`.`order_id` AS `order_id`,`menu`.`name` AS `dish`,`orders`.`quantity` AS `quantity`,(((select `menu`.`price` from `menu` where (`menu`.`menu_id` = `orders`.`menu_id`)) * `orders`.`quantity`) + ifnull((select sum(`extras`.`price`) from (`order_extras` join `extras` on((`extras`.`extra_id` = `order_extras`.`extra_id`))) where (`order_extras`.`order_id` = `orders`.`order_id`)),0)) AS `total_order` from (`orders` join `menu` on((`menu`.`menu_id` = `orders`.`menu_id`))) */;
+/*!50001 VIEW `orders_by_table` AS select `orders`.`order_id` AS `order_id`,`tables`.`table_id` AS `table_id` from (`orders` join `tables` on(((`tables`.`table_id` = `orders`.`table_id`) and (`orders`.`check_id` is null)))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `longest_time_for_orders`
+--
+
+/*!50001 DROP VIEW IF EXISTS `longest_time_for_orders`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `longest_time_for_orders` AS select `menu`.`name` AS `name`,`orders`.`created_at` AS `ordered_at`,`orders`.`served_at` AS `served_at` from ((`menu` join `orders` on((`orders`.`menu_id` = `menu`.`menu_id`))) join `menu_categories` on((`menu_categories`.`menu_id` = `menu`.`menu_id`))) where (`orders`.`served_at` between '2000-01-01 00:00:00' and '2010-01-01 00:00:00') group by `menu`.`name` order by `orders`.`served_at` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -151,6 +181,29 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `orders_by_table` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `orders_by_table`()
+BEGIN
+	SELECT COUNT(order_id) AS orders_count, tables.table_id, locations.name
+    FROM orders
+	JOIN tables ON tables.table_id = orders.table_id
+    JOIN locations ON locations.location_id = tables.location_id
+    GROUP BY tables.table_id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -161,4 +214,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-30  0:01:18
+-- Dump completed on 2019-08-30 10:03:57

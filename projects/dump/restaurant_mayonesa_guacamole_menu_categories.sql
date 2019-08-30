@@ -38,6 +38,7 @@ CREATE TABLE `menu_categories` (
 
 LOCK TABLES `menu_categories` WRITE;
 /*!40000 ALTER TABLE `menu_categories` DISABLE KEYS */;
+INSERT INTO `menu_categories` VALUES (1,1),(2,2),(3,3),(3,4),(4,4),(5,5),(6,6),(7,7),(8,8),(9,2),(9,3),(9,4),(10,1),(10,4),(11,5),(12,5),(13,5),(14,5),(15,5),(16,8),(17,8),(18,8),(19,8),(20,8),(21,8),(22,3),(22,4),(23,2),(23,3),(23,4),(24,2),(24,3),(24,4),(25,2),(25,4);
 /*!40000 ALTER TABLE `menu_categories` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-30  0:01:15
+-- Dump completed on 2019-08-30 10:03:54
