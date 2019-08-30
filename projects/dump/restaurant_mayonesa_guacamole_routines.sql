@@ -31,6 +31,24 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Temporary view structure for view `invoice_creation`
+--
+
+DROP TABLE IF EXISTS `invoice_creation`;
+/*!50001 DROP VIEW IF EXISTS `invoice_creation`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `invoice_creation` AS SELECT 
+ 1 AS `invoice_id`,
+ 1 AS `customer`,
+ 1 AS `method`,
+ 1 AS `reference`,
+ 1 AS `date`,
+ 1 AS `details`,
+ 1 AS `total`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Temporary view structure for view `orders_by_table`
 --
 
@@ -76,6 +94,24 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
+-- Final view structure for view `invoice_creation`
+--
+
+/*!50001 DROP VIEW IF EXISTS `invoice_creation`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `invoice_creation` AS select `invoices`.`invoice_id` AS `invoice_id`,concat(`customers`.`first_name`,' ',`customers`.`last_name`) AS `customer`,`payment_methods`.`method` AS `method`,`invoices`.`reference` AS `reference`,`invoices`.`date` AS `date`,ifnull(`invoices`.`details`,'N/A') AS `details`,`invoices`.`total` AS `total` from ((`invoices` join `customers` on((`customers`.`customer_id` = `invoices`.`customer_id`))) join `payment_methods` on((`payment_methods`.`payment_method_id` = `invoices`.`payment_method_id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `orders_by_table`
 --
 
@@ -114,6 +150,44 @@ SET character_set_client = @saved_cs_client;
 --
 -- Dumping routines for database 'restaurant_mayonesa_guacamole'
 --
+/*!50003 DROP FUNCTION IF EXISTS `calculate_order_total` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `calculate_order_total`(orderId INT, menuId INT, quantity INT) RETURNS decimal(8,2)
+    DETERMINISTIC
+BEGIN
+	DECLARE menu_total DECIMAL(8,2);
+    DECLARE extras_total DECIMAL(8,2);
+    
+    SELECT menu.price INTO menu_total
+    FROM menu
+    WHERE menu.menu_id = menuId;
+    
+    SELECT SUM(extras.price) INTO extras_total
+    FROM extras
+    JOIN order_extras ON order_extras.extra_id = extras.extra_id
+    JOIN orders ON orders.order_id = order_extras.extra_id
+    WHERE orders.order_id = orderId
+    GROUP BY extras.extra_id;
+    
+    IF extras_total IS NOT NULL THEN
+		RETURN (menu_total + extras_total) * quantity;
+	ELSE
+		RETURN menu_total * quantity;
+	END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `average_day` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -215,4 +289,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-30 14:57:59
+-- Dump completed on 2019-08-30 16:11:43
