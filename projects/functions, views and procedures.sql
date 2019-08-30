@@ -1,6 +1,6 @@
 -- Views
-CREATE VIEW vista_popularity AS 
-SELECT menu.menu_id, menu.name, menu.price, COUNT(*) AS popularity 
+CREATE VIEW dish_popularity AS 
+SELECT menu.menu_id, menu.name, menu.price, SUM(orders.quantity) AS popularity 
 FROM menu
 JOIN orders ON orders.menu_id = menu.menu_id
 GROUP BY menu.menu_id
@@ -31,11 +31,12 @@ DROP PROCEDURE IF EXISTS orders_by_table;
 DELIMITER $$
 CREATE PROCEDURE orders_by_table ()
 BEGIN
-	SELECT COUNT(order_id) AS orders_count, tables.table_id, locations.name
+	SELECT tables.table_id, COUNT(order_id) AS orders_count, locations.name AS location
     FROM orders
 	JOIN tables ON tables.table_id = orders.table_id
     JOIN locations ON locations.location_id = tables.location_id
-    GROUP BY tables.table_id;
+    GROUP BY tables.table_id
+    ORDER BY orders_count DESC;
 END $$
 DELIMITER ;
 
