@@ -16,6 +16,21 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Temporary view structure for view `dish_popularity`
+--
+
+DROP TABLE IF EXISTS `dish_popularity`;
+/*!50001 DROP VIEW IF EXISTS `dish_popularity`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `dish_popularity` AS SELECT 
+ 1 AS `menu_id`,
+ 1 AS `name`,
+ 1 AS `price`,
+ 1 AS `popularity`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Temporary view structure for view `orders_by_table`
 --
 
@@ -43,19 +58,22 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary view structure for view `vista_popularity`
+-- Final view structure for view `dish_popularity`
 --
 
-DROP TABLE IF EXISTS `vista_popularity`;
-/*!50001 DROP VIEW IF EXISTS `vista_popularity`*/;
-SET @saved_cs_client     = @@character_set_client;
-/*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `vista_popularity` AS SELECT 
- 1 AS `menu_id`,
- 1 AS `name`,
- 1 AS `price`,
- 1 AS `popularity`*/;
-SET character_set_client = @saved_cs_client;
+/*!50001 DROP VIEW IF EXISTS `dish_popularity`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `dish_popularity` AS select `menu`.`menu_id` AS `menu_id`,`menu`.`name` AS `name`,`menu`.`price` AS `price`,sum(`orders`.`quantity`) AS `popularity` from (`menu` join `orders` on((`orders`.`menu_id` = `menu`.`menu_id`))) group by `menu`.`menu_id` order by `popularity` desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
 -- Final view structure for view `orders_by_table`
@@ -89,24 +107,6 @@ SET character_set_client = @saved_cs_client;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `longest_time_for_orders` AS select `menu`.`name` AS `name`,`orders`.`created_at` AS `ordered_at`,`orders`.`served_at` AS `served_at` from ((`menu` join `orders` on((`orders`.`menu_id` = `menu`.`menu_id`))) join `menu_categories` on((`menu_categories`.`menu_id` = `menu`.`menu_id`))) where (`orders`.`served_at` between '2000-01-01 00:00:00' and '2010-01-01 00:00:00') group by `menu`.`name` order by `orders`.`served_at` */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `vista_popularity`
---
-
-/*!50001 DROP VIEW IF EXISTS `vista_popularity`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8mb4 */;
-/*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `vista_popularity` AS select `menu`.`menu_id` AS `menu_id`,`menu`.`name` AS `name`,`menu`.`price` AS `price`,count(0) AS `popularity` from (`menu` join `orders` on((`orders`.`menu_id` = `menu`.`menu_id`))) group by `menu`.`menu_id` order by `popularity` desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -193,11 +193,12 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `orders_by_table`()
 BEGIN
-	SELECT COUNT(order_id) AS orders_count, tables.table_id, locations.name
+	SELECT tables.table_id, COUNT(order_id) AS orders_count, locations.name AS location
     FROM orders
 	JOIN tables ON tables.table_id = orders.table_id
     JOIN locations ON locations.location_id = tables.location_id
-    GROUP BY tables.table_id;
+    GROUP BY tables.table_id
+    ORDER BY orders_count DESC;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -214,4 +215,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-30 10:03:57
+-- Dump completed on 2019-08-30 14:57:59
